@@ -1,6 +1,5 @@
 package cn.fyd.monitorlogin.service.impl;
 
-import cn.fyd.monitorlogin.common.ValidFileds;
 import cn.fyd.monitorlogin.dao.UserDao;
 import cn.fyd.monitorlogin.exception.MonitorException;
 import cn.fyd.monitorlogin.model.LoginDto;
@@ -9,8 +8,12 @@ import cn.fyd.monitorlogin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static cn.fyd.monitorlogin.common.Constant.*;
 
@@ -27,8 +30,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void login(LoginDto loginDto, HttpSession session) throws MonitorException {
-        // 验证参数是否为空
-        ValidFileds.verificationoColumn(loginDto);
         // 从session中获取验证码
         Object imgCodeObject = session.getAttribute("ImgCode");
         if (imgCodeObject == null) {
@@ -59,45 +60,63 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void applyUser(User newUser) throws MonitorException {
-        // 验证参数是否为空
-
-        // 验证邮箱格式
-//        if (newUser.getEmail()!=null&&!CheckUtil.checkEmail(newUser.getEmail())) {
-//            throw new MonitorException(WRONG_MAIL);
-//        }
-//        if (newUser.getEmail()!=null&&userMapper.queryUserDetailByEmail(newUser.getEmail())!=null) {
-//            throw new MonitorException(MAIL_EXIST);
-//        }
-//        int userNum = userMapper.countUser(newUser);
-//        //新增用户信息
-//        if (newUser.getUser_id()==null||"".equals(newUser.getUser_id())) {
-//            if (userNum>0) {
-//                throw new MonitorException(USER_EXIST);
-//            }
-//            newUser.setUser_id(UUID.randomUUID().toString());
-//            userMapper.addUser(newUser);
-//        } else {//修改用户信息
-//            if (userNum==0) {
-//                throw new MonitorException(USER_NOT_EXIST);
-//            }
-//            //如邮箱为空是修改密码接口
-//            if (newUser.getEmail()==null){
-//                if (userMapper.editUserById(newUser) == 0) {
-//                    throw new MonitorException(EDIT_PASSWORD_FAILED);
-//                }
-//            } else {
-//                if (userMapper.editUserById(newUser) == 0) {
-//                    throw new MonitorException(EDIT_USER_MESSAGE_FAILED);
-//                }
-//            }
-//        }
+        String email = newUser.getEmail();
+        if (!StringUtils.isEmpty(email)&&!checkEmail(email)) {
+            throw new MonitorException(WRONG_MAIL);
+        }
+        if (!StringUtils.isEmpty(email)&&userDao.queryBySelective(newUser)!=null) {
+            throw new MonitorException(MAIL_EXIST);
+        }
+        User existUserSelective = new User();
+        existUserSelective.setAccount(newUser.getAccount());
+        // 根据account查询该用户是否存在
+        int existNum = userDao.countUser(existUserSelective);
+        if (StringUtils.isEmpty(newUser.getId())) {
+            // 注册
+            if(addUser(newUser,existNum) == 0) {
+                throw new MonitorException(REGIST_FAILED);
+            }
+        } else {
+            // 修改信息
+            if (editUser(newUser, existNum) == 0) {
+                throw new MonitorException(EDIT_USER_MESSAGE_FAILED);
+            }
+        }
     }
 
     @Override
     public User getUserInfo(String id) throws MonitorException {
-        // 验证参数
-
+        User selective = new User();
+        selective.setId(id);
         // 验证查询结果是否为空
-        return null;
+        User resUser = userDao.queryBySelective(selective);
+        if (resUser == null) {
+            throw new MonitorException(USER_NOT_EXIST);
+        }
+        return resUser;
+    }
+
+    public int addUser(User newUser, Integer existNum) throws MonitorException {
+        if (existNum > 0) {
+            throw new MonitorException(USER_EXIST);
+        }
+        // 设置主键uuid
+        newUser.setId(UUID.randomUUID().toString());
+        // 新增用户
+        return userDao.addUser(newUser);
+    }
+
+    private int editUser(User newUser, Integer existNum) throws MonitorException {
+        if (existNum == 0) {
+            throw new MonitorException(USER_NOT_EXIST);
+        }
+        return userDao.countUser(newUser);
+    }
+
+    private boolean checkEmail(String email) {
+        String rule = "^[A-Za-zd0-9]+([-_.][A-Za-zd0-9]+)*@([A-Za-zd0-9]+[-.])+[A-Za-zd]{2,5}$";
+        Pattern p = Pattern.compile(rule);
+        Matcher m = p.matcher(email);
+        return m.matches();
     }
 }

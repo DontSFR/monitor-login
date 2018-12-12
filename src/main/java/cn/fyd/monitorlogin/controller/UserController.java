@@ -1,15 +1,21 @@
 package cn.fyd.monitorlogin.controller;
 
 import cn.fyd.monitorlogin.common.Response;
+import cn.fyd.monitorlogin.common.ValidFileds;
+import cn.fyd.monitorlogin.exception.MonitorException;
 import cn.fyd.monitorlogin.model.LoginDto;
+import cn.fyd.monitorlogin.model.User;
 import cn.fyd.monitorlogin.service.UserService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+
+import static cn.fyd.monitorlogin.common.Constant.WRONG_PARAMS;
 
 /**
  * User控制层
@@ -33,9 +39,35 @@ public class UserController {
     public Response login(String params, HttpServletRequest request) {
         try {
             LoginDto loginDto = JSON.parseObject(params, LoginDto.class);
+            // 验证参数是否为空
+            ValidFileds.verificationoColumn(loginDto);
             userService.login(loginDto, request.getSession());
             return Response.success();
-        } catch (Exception e) {
+        } catch (MonitorException e) {
+            return Response.failed(e.getMessage());
+        }
+    }
+
+    @PostMapping("/userInfo")
+    public Response info(String id) {
+        // 验证参数是否为空
+        if (StringUtils.isEmpty(id)) {
+            return Response.failed(WRONG_PARAMS);
+        }
+        try {
+            return Response.success(userService.getUserInfo(id));
+        } catch (MonitorException e) {
+            return Response.failed(e.getMessage());
+        }
+    }
+
+    @PostMapping("/apply")
+    public Response apply(String params) {
+        try {
+            User newUser = JSON.parseObject(params, User.class);
+            userService.applyUser(newUser);
+            return Response.success();
+        } catch (MonitorException e) {
             return Response.failed(e.getMessage());
         }
     }

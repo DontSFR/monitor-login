@@ -67,6 +67,8 @@ public interface Constant {
 
     String EDIT_USER_MESSAGE_FAILED = "修改用户信息失败";
 
+    String REGIST_FAILED = "注册失败";
+
     String WRONG_PARAMS = "参数错误";
 
     String WRONG_DATA = "数据错误，请联系管理员";
