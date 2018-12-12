@@ -27,7 +27,6 @@ spring:
 #设置需要输出包的日志级别
 logging:
   level:
-    root: ERROR
     cn.fyd: debug
 
 #mapper文件路径
