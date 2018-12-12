@@ -1,0 +1,35 @@
+server:
+  port: 8002
+
+eureka:
+  instance:
+    #设置服务名称
+    hostname: 127.0.0.1
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+
+spring:
+  application:
+    name: monitor-login
+  #配置数据库
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/monitor
+    username: root
+    password: admin
+    #数据源类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    #显示sql语句
+    jpa:
+      dashow-sql: true
+
+#设置需要输出包的日志级别
+logging:
+  level:
+    cn.fyd: debug
+
+#mapper文件路径
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: cn.fyd.monitorlogin.dao
