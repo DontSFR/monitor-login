@@ -114,6 +114,8 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
+
+        <defaultGoal>compile</defaultGoal>
     </build>
 
     <repositories>
