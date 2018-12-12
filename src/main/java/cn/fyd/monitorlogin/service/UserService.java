@@ -3,8 +3,10 @@ package cn.fyd.monitorlogin.service;
 import cn.fyd.monitorlogin.exception.MonitorException;
 import cn.fyd.monitorlogin.model.LoginDto;
 import cn.fyd.monitorlogin.model.User;
+import org.springframework.validation.BindingResult;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 /**
  * User表相关的服务接口类
@@ -15,12 +17,11 @@ public interface UserService {
 
     /**
      * 登录服务接口
-     * @param session
      * @param loginDto
-     * @return
+     * @param session
      * @throws MonitorException
      */
-    int login(HttpSession session, LoginDto loginDto) throws MonitorException;
+    void login(LoginDto loginDto, HttpSession session) throws MonitorException;
 
     /**
      * 修改/新增 用户

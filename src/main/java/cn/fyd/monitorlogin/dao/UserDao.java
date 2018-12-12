@@ -32,7 +32,7 @@ public interface UserDao {
      * @param user
      * @return 用户list
      */
-    List<User> queryBySelective(User user);
+    User queryBySelective(User user);
 
     /**
      * 根据条件编辑用户

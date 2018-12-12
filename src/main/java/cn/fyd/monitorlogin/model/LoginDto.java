@@ -1,5 +1,7 @@
 package cn.fyd.monitorlogin.model;
 
+import cn.fyd.monitorlogin.annotation.IsEmpty;
+
 /**
  * 登录dto
  * @author fanyidong
@@ -10,11 +12,13 @@ public class LoginDto {
     /**
      * 账号
      */
+    @IsEmpty(name = "账号")
     private String account;
 
     /**
      * 密码
      */
+    @IsEmpty(name = "密码")
     private String password;
 
     /**

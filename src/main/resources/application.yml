@@ -15,7 +15,7 @@ spring:
   #配置数据库
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/monitor
+    url: jdbc:mysql://localhost:3306/common
     username: root
     password: admin
     #数据源类型

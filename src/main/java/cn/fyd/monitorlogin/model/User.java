@@ -27,7 +27,7 @@ public class User {
     /**
      * 邮箱
      */
-    private String eamil;
+    private String email;
 
     /**
      * 手机号
@@ -58,12 +58,12 @@ public class User {
         this.password = password;
     }
 
-    public String getEamil() {
-        return eamil;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEamil(String eamil) {
-        this.eamil = eamil;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public BigInteger getMobile() {
@@ -80,7 +80,7 @@ public class User {
                 "id='" + id + '\'' +
                 ", account='" + account + '\'' +
                 ", password='" + password + '\'' +
-                ", eamil='" + eamil + '\'' +
+                ", email='" + email + '\'' +
                 ", mobile=" + mobile +
                 '}';
     }

@@ -1,5 +1,6 @@
 package cn.fyd.monitorlogin.service.impl;
 
+import cn.fyd.monitorlogin.common.ValidFileds;
 import cn.fyd.monitorlogin.dao.UserDao;
 import cn.fyd.monitorlogin.exception.MonitorException;
 import cn.fyd.monitorlogin.model.LoginDto;
@@ -7,9 +8,9 @@ import cn.fyd.monitorlogin.model.User;
 import cn.fyd.monitorlogin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpSession;
-import java.util.UUID;
 
 import static cn.fyd.monitorlogin.common.Constant.*;
 
@@ -25,17 +26,26 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public int login(HttpSession session, LoginDto loginDto) throws MonitorException {
+    public void login(LoginDto loginDto, HttpSession session) throws MonitorException {
         // 验证参数是否为空
-
+        ValidFileds.verificationoColumn(loginDto);
         // 验证验证码
 
+        // 查询条件对象
+        User selectiveUser = new User();
+        selectiveUser.setAccount(loginDto.getAccount());
+        //查询结果对象
+        User resUser = userDao.queryBySelective(selectiveUser);
         // 验证用户是否存在
-
+        if (resUser == null) {
+            throw new MonitorException(USER_NOT_EXIST);
+        }
         // 验证密码
-
+        if (!resUser.getPassword().equals(DigestUtils.md5DigestAsHex(loginDto.getPassword().getBytes()))) {
+            throw new MonitorException(WRONG_PASSWORD);
+        }
         // 存session
-        return 0;
+        session.setAttribute("userBean", resUser);
     }
 
     @Override

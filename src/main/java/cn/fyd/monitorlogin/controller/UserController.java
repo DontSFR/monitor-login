@@ -33,7 +33,7 @@ public class UserController {
     public Response login(String params, HttpServletRequest request) {
         try {
             LoginDto loginDto = JSON.parseObject(params, LoginDto.class);
-            userService.login(request.getSession(), loginDto);
+            userService.login(loginDto, request.getSession());
             return Response.success();
         } catch (Exception e) {
             return Response.failed(e.getMessage());

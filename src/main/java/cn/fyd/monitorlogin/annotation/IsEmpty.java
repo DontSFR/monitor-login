@@ -6,12 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 验证登录注解
+ * 验证对象属性注解
  * @author fanyidong
- * @date Created in 2018-12-11
+ * @date 2018-12-11
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
-public @interface IsLogin {
-    String value() default "";
+@Target({ ElementType.FIELD})
+public @interface IsEmpty {
+    String name();
+    boolean require() default true;
+    String requireFailMessage() default "不能为空";
 }
