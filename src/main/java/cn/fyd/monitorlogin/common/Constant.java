@@ -80,4 +80,8 @@ public interface Constant {
     String SYSTEM_ERROR = "系统错误，请联系系统管理员";
 
     String VERIFY_OBJECT_CAN_NOT_BE_EMPTY = "校验对象不能为空";
+
+    Integer CAPTCHA_LENGTH = 4;
+
+    Integer CAPTCHA_BACKGROUND = 120;
 }

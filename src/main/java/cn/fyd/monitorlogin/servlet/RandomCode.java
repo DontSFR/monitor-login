@@ -14,6 +14,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
+import static cn.fyd.monitorlogin.common.Constant.CAPTCHA_BACKGROUND;
+import static cn.fyd.monitorlogin.common.Constant.CAPTCHA_LENGTH;
+
 /**
  * 获取验证码Servlet
  * @author fanyidong
@@ -68,7 +71,7 @@ public class RandomCode extends HttpServlet {
 	private void drawBackground(Graphics g) {
 		g.setColor(new Color(0xDCDCDC));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		for (int i = 0; i < 120; i++) {
+		for (int i = 0; i < CAPTCHA_BACKGROUND; i++) {
 			int x = (int) (Math.random() * WIDTH);
 			int y = (int) (Math.random() * HEIGHT);
 			int red = (int) (Math.random() * 255);
@@ -95,7 +98,7 @@ public class RandomCode extends HttpServlet {
 	private char[] generateCheckCode() {
 		String chars = "3456789ABCDEFGHJKLMNPQRSTUVWXY";
 		char[] rands = new char[4];
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < CAPTCHA_LENGTH; i++) {
 			int rand = (int) (Math.random() * 30);
 			rands[i] = chars.charAt(rand);
 		}
