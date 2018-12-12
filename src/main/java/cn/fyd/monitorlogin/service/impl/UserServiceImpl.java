@@ -29,8 +29,17 @@ public class UserServiceImpl implements UserService {
     public void login(LoginDto loginDto, HttpSession session) throws MonitorException {
         // 验证参数是否为空
         ValidFileds.verificationoColumn(loginDto);
+        // 从session中获取验证码
+        Object imgCodeObject = session.getAttribute("ImgCode");
+        if (imgCodeObject == null) {
+            throw new MonitorException(NO_CAPTCHA);
+        }
+        // 转化为小写字母
+        String imgCode = imgCodeObject.toString().toLowerCase();
         // 验证验证码
-
+        if (!imgCode.equals(loginDto.getCaptcha().toLowerCase())) {
+            throw new MonitorException(WRONG_CAPTCHA);
+        }
         // 查询条件对象
         User selectiveUser = new User();
         selectiveUser.setAccount(loginDto.getAccount());

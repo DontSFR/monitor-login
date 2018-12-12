@@ -53,7 +53,8 @@ public class RandomCode extends HttpServlet {
 			sos.write(buf);
 			bos.close();
 			sos.close();
-			session.setAttribute("ImgCode", new String(rands));
+			String imgCode = new String(rands);
+			session.setAttribute("ImgCode", imgCode);
 		} catch (Exception e){
 			e.printStackTrace();
 		}

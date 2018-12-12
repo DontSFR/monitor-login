@@ -24,6 +24,7 @@ public class LoginDto {
     /**
      * 验证码
      */
+    @IsEmpty(name = "验证码")
     private String captcha;
 
     public String getAccount() {
