@@ -5,6 +5,7 @@ import cn.fyd.monitorlogin.exception.MonitorException;
 import cn.fyd.monitorlogin.model.LoginDto;
 import cn.fyd.monitorlogin.model.User;
 import cn.fyd.monitorlogin.service.UserService;
+import cn.fyd.monitorlogin.util.CheckUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -12,8 +13,6 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static cn.fyd.monitorlogin.common.Constant.*;
 
@@ -61,7 +60,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void applyUser(User newUser) throws MonitorException {
         String email = newUser.getEmail();
-        if (!StringUtils.isEmpty(email)&&!checkEmail(email)) {
+        if (!StringUtils.isEmpty(email)&&!CheckUtils.checkEmail(email)) {
             throw new MonitorException(WRONG_MAIL);
         }
         if (!StringUtils.isEmpty(email)&&userDao.queryBySelective(newUser)!=null) {
@@ -114,12 +113,5 @@ public class UserServiceImpl implements UserService {
         }
         // 修改信息
         return userDao.editByUserId(newUser);
-    }
-
-    private boolean checkEmail(String email) {
-        String rule = "^[A-Za-zd0-9]+([-_.][A-Za-zd0-9]+)*@([A-Za-zd0-9]+[-.])+[A-Za-zd]{2,5}$";
-        Pattern p = Pattern.compile(rule);
-        Matcher m = p.matcher(email);
-        return m.matches();
     }
 }

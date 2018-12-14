@@ -35,7 +35,7 @@ public interface Constant {
 
     String MAIL_NOT_REGIST = "该邮箱尚未注册";
 
-    String MONITOR_FIND_PASSWORD = "Monitor服务监控平台 - 找回密码";
+    String MAIL_SUBJECT = "Monitor服务监控平台 - 找回密码";
 
     String MAIL_MESS1 = "请勿回复本邮件.点击下面的链接,重设密码\n";
 

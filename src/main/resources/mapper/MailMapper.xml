@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.fyd.monitorlogin.dao.MailDao">
+    <sql id="Example_Where_Clause">
+        <trim prefix="where 1=1" suffixOverrides="," >
+            <if test="mailId!=null and mailId!=''">and mailId=#{mailId}</if>
+            <if test="userId!=null and userId!=''">and userId=#{userId}</if>
+            <if test="validationCode!=null and validationCode!=''">and validationCode=#{validationCode}</if>
+            <if test="outTime!=null and outTime!=''">and outTime=#{outTime}</if>
+            <if test="createTime!=null and createTime!=''">and createTime=#{createTime}</if>
+        </trim>
+    </sql>
+
+    <sql id="Example_Set_Clause">
+        <trim prefix="set" suffixOverrides=",">
+            <if test="mailId!=null and mailId!=''">mailId=#{mailId}</if>
+            <if test="userId!=null and userId!=''">userId=#{userId}</if>
+            <if test="validationCode!=null and validationCode!=''">validationCode=#{validationCode}</if>
+            <if test="outTime!=null and outTime!=''">outTime=#{outTime}</if>
+            <if test="createTime!=null and createTime!=''">createTime=#{createTime}</if>
+        </trim>
+    </sql>
+
+    <insert id="saveMail" parameterType="cn.fyd.monitorlogin.model.Mail">
+        insert into mail
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="mailId!=null and mailId!=''">mailId,</if>
+            <if test="userId!=null and userId!=''">userId,</if>
+            <if test="validationCode!=null and validationCode!=''">validationCode,</if>
+            <if test="outTime!=null and outTime!=''">outTime,</if>
+            <if test="createTime!=null and createTime!=''">createTime,</if>
+        </trim> values <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mailId!=null and mailId!=''">#{mailId,jdbcType=VARCHAR},</if>
+            <if test="userId!=null and userId!=''">#{userId,jdbcType=VARCHAR},</if>
+            <if test="validationCode!=null and validationCode!=''">#{validationCode,jdbcType=VARCHAR},</if>
+            <if test="outTime!=null and outTime!=''">#{outTime,jdbcType=TIMESTAMP},</if>
+            <if test="createTime!=null and createTime!=''">#{createTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <select id="queryBySelective" resultType="cn.fyd.monitorlogin.model.Mail">
+        select * from mail <include refid="Example_Where_Clause" />
+    </select>
+</mapper>

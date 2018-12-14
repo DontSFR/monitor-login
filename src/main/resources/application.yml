@@ -26,6 +26,19 @@ spring:
     #显示sql语句
     jpa:
       dashow-sql: true
+  #邮件部分
+  mail:
+    host: smtp.qq.com
+    username: monitoringmail@foxmail.com
+    #发送方的授权码
+    password: ljpevwaxmmrfbcge
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: ture
 
 #设置需要输出包的日志级别
 logging:

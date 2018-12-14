@@ -8,6 +8,7 @@ import cn.fyd.monitorlogin.model.User;
 import cn.fyd.monitorlogin.service.UserService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,6 +63,7 @@ public class UserController {
     }
 
     @PostMapping("/apply")
+    @Transactional(rollbackFor = Exception.class)
     public Response apply(String params) {
         try {
             User newUser = JSON.parseObject(params, User.class);
