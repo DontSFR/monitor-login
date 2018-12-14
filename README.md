@@ -31,7 +31,13 @@
 * 参数：{"params":{"userId":"bf6eb812-4b38-4965-a121-bf297d58447c","account":"dd","password":"1","email":"123@qq.com","mobile":"10086"}}
 * 返回格式：{"result":"success","message":null,"data":null}
 
-## 6. 修改密码
+## 6. 发送邮件
+* url地址：http://${api-url}:8002/sendEmail
+* 请求方式：post
+* 参数：{"email":"123@email.com"}
+* 返回格式：{"result":"success","message":null,"data":null}
+
+## 7. 修改密码
 * url地址：http://${api-url}:8002/apply
 * 请求方式：post
 * 参数：{"params":{"userId":"46e1fe77-d785-42ae-9b08-fe302f86a098","password": "2"}}
