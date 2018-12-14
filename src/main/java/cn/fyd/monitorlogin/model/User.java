@@ -1,5 +1,7 @@
 package cn.fyd.monitorlogin.model;
 
+import cn.fyd.monitorlogin.annotation.IsEmpty;
+
 import java.math.BigInteger;
 
 /**
@@ -12,11 +14,12 @@ public class User {
     /**
      * 用户id
      */
-    private String id;
+    private String userId;
 
     /**
      * 账号
      */
+    @IsEmpty(name = "账号")
     private String account;
 
     /**
@@ -34,12 +37,12 @@ public class User {
      */
     private BigInteger mobile;
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getAccount() {
@@ -72,16 +75,5 @@ public class User {
 
     public void setMobile(BigInteger mobile) {
         this.mobile = mobile;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", account='" + account + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", mobile=" + mobile +
-                '}';
     }
 }

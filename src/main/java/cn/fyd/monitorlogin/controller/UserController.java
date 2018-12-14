@@ -49,13 +49,13 @@ public class UserController {
     }
 
     @PostMapping("/userInfo")
-    public Response info(String id) {
+    public Response info(String userId) {
         // 验证参数是否为空
-        if (StringUtils.isEmpty(id)) {
+        if (StringUtils.isEmpty(userId)) {
             return Response.failed(WRONG_PARAMS);
         }
         try {
-            return Response.success(userService.getUserInfo(id));
+            return Response.success(userService.getUserInfo(userId));
         } catch (MonitorException e) {
             return Response.failed(e.getMessage());
         }

@@ -3,8 +3,6 @@ package cn.fyd.monitorlogin.dao;
 import cn.fyd.monitorlogin.model.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * 操作User表Dao
  * @author fanyidong
@@ -40,4 +38,11 @@ public interface UserDao {
      * @return 返回编辑成功数量
      */
     int editBySelective(User user);
+
+    /**
+     * 根据主键修改
+     * @param user
+     * @return
+     */
+    int editByUserId(User user);
 }

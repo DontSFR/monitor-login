@@ -1,10 +1,13 @@
 server:
   port: 8002
 
+fanyidong:
+  server: 39.108.52.40
+
 eureka:
   instance:
     #设置服务名称
-    hostname: 127.0.0.1
+    hostname: 39.108.52.40
   client:
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:8001/eureka/
@@ -15,9 +18,9 @@ spring:
   #配置数据库
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/common
-    username: root
-    password: admin
+    url: jdbc:mysql://${fanyidong.server}:3306/common
+    username: fanyidong
+    password: dashuaibi
     #数据源类型
     type: com.alibaba.druid.pool.DruidDataSource
     #显示sql语句

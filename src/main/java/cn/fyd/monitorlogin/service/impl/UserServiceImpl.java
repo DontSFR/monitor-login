@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
         existUserSelective.setAccount(newUser.getAccount());
         // 根据account查询该用户是否存在
         int existNum = userDao.countUser(existUserSelective);
-        if (StringUtils.isEmpty(newUser.getId())) {
+        if (StringUtils.isEmpty(newUser.getUserId())) {
             // 注册
             if(addUser(newUser,existNum) == 0) {
                 throw new MonitorException(REGIST_FAILED);
@@ -85,9 +85,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserInfo(String id) throws MonitorException {
+    public User getUserInfo(String userId) throws MonitorException {
         User selective = new User();
-        selective.setId(id);
+        selective.setUserId(userId);
         // 验证查询结果是否为空
         User resUser = userDao.queryBySelective(selective);
         if (resUser == null) {
@@ -101,7 +101,9 @@ public class UserServiceImpl implements UserService {
             throw new MonitorException(USER_EXIST);
         }
         // 设置主键uuid
-        newUser.setId(UUID.randomUUID().toString());
+        newUser.setUserId(UUID.randomUUID().toString());
+        // 密码使用md5加密
+        newUser.setPassword(DigestUtils.md5DigestAsHex(newUser.getPassword().getBytes()));
         // 新增用户
         return userDao.addUser(newUser);
     }
@@ -110,7 +112,8 @@ public class UserServiceImpl implements UserService {
         if (existNum == 0) {
             throw new MonitorException(USER_NOT_EXIST);
         }
-        return userDao.countUser(newUser);
+        // 修改信息
+        return userDao.editByUserId(newUser);
     }
 
     private boolean checkEmail(String email) {
