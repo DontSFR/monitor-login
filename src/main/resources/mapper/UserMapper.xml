@@ -24,16 +24,13 @@
     </sql>
 
     <insert id="addUser" parameterType="cn.fyd.monitorlogin.model.User">
-        insert into user
-        <trim prefix="(" suffix=")" suffixOverrides="," >
+        insert into user <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="userId!=null and userId!=''">userId,</if>
             <if test="account!=null and account!=''">account,</if>
             <if test="password!=null and password!=''">password,</if>
             <if test="email!=null and email!=''">email,</if>
             <if test="mobile!=null and mobile!=''">mobile,</if>
-        </trim>
-        values
-        <trim prefix="(" suffix=")" suffixOverrides=",">
+        </trim> values <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId!=null and userId!=''">#{userId,jdbcType=VARCHAR},</if>
             <if test="account!=null and account!=''">#{account,jdbcType=VARCHAR},</if>
             <if test="password!=null and password!=''">#{password,jdbcType=VARCHAR},</if>
@@ -57,4 +54,8 @@
     <update id="editByUserId" parameterType="cn.fyd.monitorlogin.model.User">
         update user <include refid="Example_Set_Clause" /> where userId=#{userId, jdbcType=VARCHAR}
     </update>
+
+    <select id="queryByEmail" resultType="cn.fyd.monitorlogin.model.User">
+        select * from user where email=#{email, jdbcType=VARCHAR}
+    </select>
 </mapper>

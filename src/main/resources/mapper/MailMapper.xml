@@ -43,4 +43,8 @@
     <select id="queryBySelective" resultType="cn.fyd.monitorlogin.model.Mail">
         select * from mail <include refid="Example_Where_Clause" />
     </select>
+
+    <select id="queryByUserIdOrderByOutTime" resultType="cn.fyd.monitorlogin.model.Mail">
+        select * from mail where userId=#{userId, jdbcType=VARCHAR} order by outTime desc limit 0,1
+    </select>
 </mapper>

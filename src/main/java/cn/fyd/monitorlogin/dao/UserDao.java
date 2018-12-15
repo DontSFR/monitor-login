@@ -1,6 +1,7 @@
 package cn.fyd.monitorlogin.dao;
 
 import cn.fyd.monitorlogin.model.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -45,4 +46,11 @@ public interface UserDao {
      * @return
      */
     int editByUserId(User user);
+
+    /**
+     * 根据email查询用户
+     * @param email
+     * @return
+     */
+    User queryByEmail(@Param("email") String email);
 }

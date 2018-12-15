@@ -1,6 +1,7 @@
 package cn.fyd.monitorlogin.dao;
 
 import cn.fyd.monitorlogin.model.Mail;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -24,4 +25,11 @@ public interface MailDao {
      * @return
      */
     Mail queryBySelective(Mail mail);
+
+    /**
+     * 根据userId查询mail信息，并取最新一条记录
+     * @param userId
+     * @return
+     */
+    Mail queryByUserIdOrderByOutTime(@Param("userId") String userId);
 }

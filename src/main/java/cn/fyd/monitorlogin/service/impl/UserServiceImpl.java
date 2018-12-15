@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
         if (!StringUtils.isEmpty(email)&&!CheckUtils.checkEmail(email)) {
             throw new MonitorException(WRONG_MAIL);
         }
-        if (!StringUtils.isEmpty(email)&&userDao.queryBySelective(newUser)!=null) {
+        if (!StringUtils.isEmpty(email)&&userDao.queryByEmail(email)!=null) {
             throw new MonitorException(MAIL_EXIST);
         }
         User existUserSelective = new User();

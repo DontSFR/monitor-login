@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 
 /**
  * @author fanyidong
@@ -28,7 +29,7 @@ public class MailController {
         try {
             mailService.sendEmail(email, request);
             return Response.success();
-        } catch (MonitorException e) {
+        } catch (MonitorException | ParseException e) {
             return Response.failed(e.getMessage());
         }
     }

@@ -1,5 +1,6 @@
 package cn.fyd.monitorlogin.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,5 +20,16 @@ public class DateUtils {
     public static String DateToString(Date date, String format){
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(date);
+    }
+
+    /**
+     * String类型转化为date
+     * @param time
+     * @param format
+     * @return
+     */
+    public static Date StringToDate(String time, String format) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        return dateFormat.parse(time);
     }
 }

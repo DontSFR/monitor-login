@@ -47,6 +47,8 @@ public interface Constant {
 
     String LINK_EXPIRED = "链接已过期,请重新申请";
 
+    String LINK_NOT_EXPIRED = "链接未过期,不需要重新发送";
+
     String WRONG_LINK = "链接不正确,请重新申请";
 
     String USER_NOT_EXIST = "该用户不存在";
@@ -86,4 +88,6 @@ public interface Constant {
     Integer CAPTCHA_LENGTH = 4;
 
     Integer CAPTCHA_BACKGROUND = 120;
+
+    String DATE_FOEMAT_TO_SECOND = "yyyy-MM-dd HH:mm:ss";
 }
