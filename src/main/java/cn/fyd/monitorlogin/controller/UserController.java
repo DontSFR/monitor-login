@@ -1,9 +1,11 @@
 package cn.fyd.monitorlogin.controller;
 
+import cn.fyd.monitorlogin.annotation.IsLogin;
 import cn.fyd.monitorlogin.common.Response;
 import cn.fyd.monitorlogin.common.ValidFileds;
 import cn.fyd.monitorlogin.exception.MonitorException;
 import cn.fyd.monitorlogin.model.LoginDto;
+import cn.fyd.monitorlogin.model.ResetDto;
 import cn.fyd.monitorlogin.model.User;
 import cn.fyd.monitorlogin.service.UserService;
 import com.alibaba.fastjson.JSON;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.text.ParseException;
 
 import static cn.fyd.monitorlogin.common.Constant.WRONG_PARAMS;
 
@@ -49,6 +53,7 @@ public class UserController {
         }
     }
 
+    @IsLogin
     @PostMapping("/userInfo")
     public Response info(String userId) {
         // 验证参数是否为空
@@ -62,6 +67,7 @@ public class UserController {
         }
     }
 
+    @IsLogin
     @PostMapping("/apply")
     @Transactional(rollbackFor = Exception.class)
     public Response apply(String params) {
@@ -70,6 +76,20 @@ public class UserController {
             userService.applyUser(newUser);
             return Response.success();
         } catch (MonitorException e) {
+            return Response.failed(e.getMessage());
+        }
+    }
+
+    @PostMapping("/reset")
+    @Transactional(rollbackFor = Exception.class)
+    public Response reset(String params) {
+        try {
+            ResetDto dto = JSON.parseObject(params, ResetDto.class);
+            // 验证参数是否为空
+            ValidFileds.verificationoColumn(dto);
+            userService.reset(dto);
+            return Response.success();
+        } catch (MonitorException | ParseException e) {
             return Response.failed(e.getMessage());
         }
     }

@@ -2,9 +2,11 @@ package cn.fyd.monitorlogin.service;
 
 import cn.fyd.monitorlogin.exception.MonitorException;
 import cn.fyd.monitorlogin.model.LoginDto;
+import cn.fyd.monitorlogin.model.ResetDto;
 import cn.fyd.monitorlogin.model.User;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 
 /**
  * User表相关的服务接口类
@@ -35,4 +37,11 @@ public interface UserService {
      * @throws MonitorException
      */
     User getUserInfo(String userId) throws MonitorException;
+
+    /**
+     * 重设密码
+     * @param dto
+     * @throws MonitorException
+     */
+    void reset(ResetDto dto) throws MonitorException, ParseException;
 }

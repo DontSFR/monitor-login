@@ -38,7 +38,7 @@
 * 返回格式：{"result":"success","message":null,"data":null}
 
 ## 7. 修改密码
-* url地址：http://${api-url}:8002/apply
+* url地址：http://${api-url}:8002/reset
 * 请求方式：post
-* 参数：{"params":{"userId":"46e1fe77-d785-42ae-9b08-fe302f86a098","password": "2"}}
+* 参数：{"params":{"secretKey":"60baf240-559a-4775-9b12-23894b377e35","email":"fanyidong@biosan.cn","password": "1"}}
 * 返回格式：{"result":"success","message":null,"data":null}

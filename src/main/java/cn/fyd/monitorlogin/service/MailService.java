@@ -2,7 +2,6 @@ package cn.fyd.monitorlogin.service;
 
 import cn.fyd.monitorlogin.exception.MonitorException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 
 /**
@@ -15,8 +14,7 @@ public interface MailService {
     /**
      * 发送邮件方法
      * @param email 邮箱地址
-     * @param request
      * @throws MonitorException
      */
-    void sendEmail(String email, HttpServletRequest request) throws MonitorException, ParseException;
+    void sendEmail(String email) throws MonitorException, ParseException;
 }

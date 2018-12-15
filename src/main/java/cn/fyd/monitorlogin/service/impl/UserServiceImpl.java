@@ -1,8 +1,11 @@
 package cn.fyd.monitorlogin.service.impl;
 
+import cn.fyd.monitorlogin.dao.MailDao;
 import cn.fyd.monitorlogin.dao.UserDao;
 import cn.fyd.monitorlogin.exception.MonitorException;
 import cn.fyd.monitorlogin.model.LoginDto;
+import cn.fyd.monitorlogin.model.Mail;
+import cn.fyd.monitorlogin.model.ResetDto;
 import cn.fyd.monitorlogin.model.User;
 import cn.fyd.monitorlogin.service.UserService;
 import cn.fyd.monitorlogin.util.CheckUtils;
@@ -12,6 +15,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 import java.util.UUID;
 
 import static cn.fyd.monitorlogin.common.Constant.*;
@@ -26,6 +30,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private MailDao mailDao;
 
     @Override
     public void login(LoginDto loginDto, HttpSession session) throws MonitorException {
@@ -40,11 +46,8 @@ public class UserServiceImpl implements UserService {
         if (!imgCode.equals(loginDto.getCaptcha().toLowerCase())) {
             throw new MonitorException(WRONG_CAPTCHA);
         }
-        // 查询条件对象
-        User selectiveUser = new User();
-        selectiveUser.setAccount(loginDto.getAccount());
         //查询结果对象
-        User resUser = userDao.queryBySelective(selectiveUser);
+        User resUser = userDao.queryByAccountOrEmail(loginDto.getAccount());
         // 验证用户是否存在
         if (resUser == null) {
             throw new MonitorException(USER_NOT_EXIST);
@@ -93,6 +96,31 @@ public class UserServiceImpl implements UserService {
             throw new MonitorException(USER_NOT_EXIST);
         }
         return resUser;
+    }
+
+    @Override
+    public void reset(ResetDto dto) throws MonitorException, ParseException {
+        User user = userDao.queryByEmail(dto.getEmail());
+        if (user == null) {
+            throw new MonitorException(CAN_NOT_FIND_USER);
+        }
+        Mail mail = mailDao.queryByUserIdOrderByOutTime(user.getUserId());
+        if (mail == null) {
+            throw new MonitorException(CAN_NOT_FIND_MAIL);
+        }
+        if (CheckUtils.isEmailOutTime(mail.getOutTime())) {
+            throw new MonitorException(LINK_EXPIRED);
+        }
+        if (!dto.getSecretKey().equals(mail.getValidationCode())) {
+            throw new MonitorException(WRONG_LINK);
+        }
+        User editUserParam = new User();
+        editUserParam.setUserId(user.getUserId());
+        editUserParam.setEmail(dto.getEmail());
+        editUserParam.setPassword(DigestUtils.md5DigestAsHex(dto.getPassword().getBytes()));
+        if (editUser(editUserParam, 1) == 0) {
+            throw new MonitorException(EDIT_USER_MESSAGE_FAILED);
+        }
     }
 
     public int addUser(User newUser, Integer existNum) throws MonitorException {

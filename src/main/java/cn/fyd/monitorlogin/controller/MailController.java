@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 
 /**
@@ -25,9 +24,9 @@ public class MailController {
 
     @PostMapping("/sendEmail")
     @Transactional(rollbackFor = Exception.class)
-    public Response sendEmail(String email, HttpServletRequest request) {
+    public Response sendEmail(String email) {
         try {
-            mailService.sendEmail(email, request);
+            mailService.sendEmail(email);
             return Response.success();
         } catch (MonitorException | ParseException e) {
             return Response.failed(e.getMessage());

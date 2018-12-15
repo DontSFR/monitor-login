@@ -31,25 +31,27 @@ public interface Constant {
 
     String TWO_PASSWORD_NOT_SAME = "两次密码输入不一致";
 
-    String SEND_MAIL_SUCCESS = "操作成功,已经发送找回密码链接到您邮箱。请在30分钟内重置密码";
+    String SEND_MAIL_SUCCESS = "操作成功,已经发送找回密码安全码到您邮箱。请在30分钟内重置密码";
 
     String MAIL_NOT_REGIST = "该邮箱尚未注册";
 
     String MAIL_SUBJECT = "Monitor服务监控平台 - 找回密码";
 
-    String MAIL_MESS1 = "请勿回复本邮件.点击下面的链接,重设密码\n";
+    String MAIL_MESS1 = "请勿回复本邮件，请复制下面的安全码,重设密码\n\n";
 
-    String MAIL_MESS2 = "\n注意:本链接超过30分钟将会失效，需要重新申请找回密码";
+    String MAIL_MESS2 = "\n\n注意:安全码超过30分钟将会失效，需要重新申请找回密码";
 
-    String LINK_PARAMS_EMPTY = "链接参数为空，请重新申请";
+    String LINK_PARAMS_EMPTY = "安全码参数为空，请重新申请";
 
     String CAN_NOT_FIND_USER = "无法找到匹配用户,请重新申请";
 
-    String LINK_EXPIRED = "链接已过期,请重新申请";
+    String CAN_NOT_FIND_MAIL = "请确认是否已发送安全码";
 
-    String LINK_NOT_EXPIRED = "链接未过期,不需要重新发送";
+    String LINK_EXPIRED = "安全码已过期,请重新申请";
 
-    String WRONG_LINK = "链接不正确,请重新申请";
+    String LINK_NOT_EXPIRED = "安全码未过期,不需要重新发送";
+
+    String WRONG_LINK = "安全码不正确,请重新申请";
 
     String USER_NOT_EXIST = "该用户不存在";
 

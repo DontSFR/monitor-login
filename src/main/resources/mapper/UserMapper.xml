@@ -13,6 +13,14 @@
         </trim>
     </sql>
 
+    <sql id="Where_Clause_UserId_Account_Email">
+        <trim prefix="where 1=1" suffixOverrides="," >
+            <if test="userId!=null and userId!=''">and userId=#{userId}</if>
+            <if test="account!=null and account!=''">and account=#{account}</if>
+            <if test="password!=null and password!=''">and password=#{password}</if>
+        </trim>
+    </sql>
+
     <sql id="Example_Set_Clause">
         <trim prefix="set" suffixOverrides=",">
             <if test="userId!=null and userId!=''">userId=#{userId},</if>
@@ -47,8 +55,8 @@
         select * from user <include refid="Example_Where_Clause" />
     </select>
 
-    <update id="editBySelective" parameterType="cn.fyd.monitorlogin.model.User">
-        update user <include refid="Example_Set_Clause" /> <include refid="Example_Where_Clause" />
+    <update id="editByUserIdOrAccountOrEmail" parameterType="cn.fyd.monitorlogin.model.User">
+        update user <include refid="Example_Set_Clause" /> <include refid="Where_Clause_UserId_Account_Email" />
     </update>
 
     <update id="editByUserId" parameterType="cn.fyd.monitorlogin.model.User">
@@ -57,5 +65,9 @@
 
     <select id="queryByEmail" resultType="cn.fyd.monitorlogin.model.User">
         select * from user where email=#{email, jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryByAccountOrEmail" parameterType="java.lang.String">
+        select * from user where user=#{param} or email=#{param}
     </select>
 </mapper>

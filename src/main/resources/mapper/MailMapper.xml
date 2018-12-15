@@ -41,7 +41,7 @@
     </insert>
 
     <select id="queryBySelective" resultType="cn.fyd.monitorlogin.model.Mail">
-        select * from mail <include refid="Example_Where_Clause" />
+        select * from mail <include refid="Example_Where_Clause" /> limit 0,1
     </select>
 
     <select id="queryByUserIdOrderByOutTime" resultType="cn.fyd.monitorlogin.model.Mail">

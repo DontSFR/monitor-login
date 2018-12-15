@@ -15,10 +15,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.UUID;
 
 import static cn.fyd.monitorlogin.common.Constant.*;
@@ -39,9 +37,15 @@ public class MailServiceImpl implements MailService {
     private String sender;
     @Autowired
     private JavaMailSender mailSender;
+    @Value("${fanyidong.context}")
+    private String context;
+    @Value("${fanyidong.server}")
+    private String server;
+    @Value("${server.port}")
+    private String port;
 
     @Override
-    public void sendEmail(String email, HttpServletRequest request) throws MonitorException, ParseException {
+    public void sendEmail(String email) throws MonitorException, ParseException {
         // 验证邮箱格式
         if (!StringUtils.isEmpty(email)&&!CheckUtils.checkEmail(email)) {
             throw new MonitorException(WRONG_MAIL);
@@ -54,15 +58,12 @@ public class MailServiceImpl implements MailService {
         // 验证上一封邮件是否存在或过期
         Mail lastMail = mailDao.queryByUserIdOrderByOutTime(resUser.getUserId());
         if (lastMail != null) {
-            // 获取过期日期
-            String lastMailOutTime = lastMail.getOutTime();
-            Date lastMailOutTimeDate = DateUtils.StringToDate(lastMailOutTime, DATE_FOEMAT_TO_SECOND);
-            // 若过期时间在当前时间之后，不发送
-            if (lastMailOutTimeDate.after(new Date())) {
+            // 未过期
+            if (!CheckUtils.isEmailOutTime(lastMail.getOutTime())) {
                 throw new MonitorException(LINK_NOT_EXPIRED);
             }
         }
-        // 生成密钥
+        // 生成安全码
         String secretKey = UUID.randomUUID().toString();
         // 新建Mail对象
         Mail mail = new Mail();
@@ -85,14 +86,8 @@ public class MailServiceImpl implements MailService {
         newMessage.setTo(email);
         // 设置邮件主题
         newMessage.setSubject(MAIL_SUBJECT);
-        // 获取协议名
-        String path = request.getContextPath();
-        // 获取主机名及端口号
-        String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-        // 设置修改密码地址(需修改为前端地址，并利用sid做校验)
-        String resetPasswordHref = basePath + "reset/byEmail?validationCode=" + secretKey + "&account=" + resUser.getAccount();
         // 设置邮件内容
-        newMessage.setText(MAIL_MESS1 + resetPasswordHref + MAIL_MESS2);
+        newMessage.setText(MAIL_MESS1 + secretKey + MAIL_MESS2);
         mailSender.send(newMessage);
     }
 }

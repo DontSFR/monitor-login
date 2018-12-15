@@ -2,6 +2,7 @@ server:
   port: 8002
 
 fanyidong:
+  context: http
   server: 39.108.52.40
 
 eureka:

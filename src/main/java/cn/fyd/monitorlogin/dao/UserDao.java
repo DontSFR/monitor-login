@@ -38,7 +38,7 @@ public interface UserDao {
      * @param user
      * @return 返回编辑成功数量
      */
-    int editBySelective(User user);
+    int editByUserIdOrAccountOrEmail(User user);
 
     /**
      * 根据主键修改
@@ -53,4 +53,11 @@ public interface UserDao {
      * @return
      */
     User queryByEmail(@Param("email") String email);
+
+    /**
+     * 根据账户或邮件查询
+     * @param param account or email
+     * @return
+     */
+    User queryByAccountOrEmail(String param);
 }
