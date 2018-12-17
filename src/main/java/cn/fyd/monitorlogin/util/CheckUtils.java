@@ -26,6 +26,13 @@ public class CheckUtils {
         return m.matches();
     }
 
+    /**
+     * 判断时间是否过期
+     * @param lastMailOutTime 过期时间
+     * @return ture：安全码已过期
+     *         false：安全码未过期
+     * @throws ParseException
+     */
     public static boolean isEmailOutTime(String lastMailOutTime) throws ParseException {
         // 转换格式
         Date lastMailOutTimeDate = DateUtils.StringToDate(lastMailOutTime, DATE_FOEMAT_TO_SECOND);
