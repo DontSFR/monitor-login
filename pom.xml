@@ -99,7 +99,7 @@
                             <goal>repackage</goal>
                         </goals>
                     </execution>
-                </executions>0
+                </executions>
             </plugin>
             <!-- maven编译打包跳过test -->
             <plugin>
