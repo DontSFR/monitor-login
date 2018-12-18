@@ -24,12 +24,8 @@ public class MailController {
 
     @PostMapping("/sendEmail")
     @Transactional(rollbackFor = Exception.class)
-    public Response sendEmail(String email) {
-        try {
-            mailService.sendEmail(email);
-            return Response.success();
-        } catch (MonitorException | ParseException e) {
-            return Response.failed(e.getMessage());
-        }
+    public Response sendEmail(String email) throws Exception{
+        mailService.sendEmail(email);
+        return Response.success();
     }
 }

@@ -41,56 +41,41 @@ public class UserController {
      * @return Response
      */
     @PostMapping("/login")
-    public Response login(String params, HttpServletRequest request) {
-        try {
-            LoginDto loginDto = JSON.parseObject(params, LoginDto.class);
-            // 验证参数是否为空
-            ValidFileds.verificationoColumn(loginDto);
-            userService.login(loginDto, request.getSession());
-            return Response.success();
-        } catch (MonitorException e) {
-            return Response.failed(e.getMessage());
-        }
+    public Response login(String params, HttpServletRequest request) throws Exception {
+        LoginDto loginDto = JSON.parseObject(params, LoginDto.class);
+        // 验证参数是否为空
+        ValidFileds.verificationoColumn(loginDto);
+        userService.login(loginDto, request.getSession());
+        return Response.success();
     }
 
     @IsLogin
     @PostMapping("/userInfo")
-    public Response info(String userId) {
+    public Response info(String userId) throws Exception {
         // 验证参数是否为空
         if (StringUtils.isEmpty(userId)) {
             return Response.failed(WRONG_PARAMS);
         }
-        try {
-            return Response.success(userService.getUserInfo(userId));
-        } catch (MonitorException e) {
-            return Response.failed(e.getMessage());
-        }
+        return Response.success(userService.getUserInfo(userId));
+
     }
 
     @IsLogin
     @PostMapping("/apply")
     @Transactional(rollbackFor = Exception.class)
-    public Response apply(String params) {
-        try {
-            User newUser = JSON.parseObject(params, User.class);
-            userService.applyUser(newUser);
-            return Response.success();
-        } catch (MonitorException e) {
-            return Response.failed(e.getMessage());
-        }
+    public Response apply(String params) throws Exception{
+        User newUser = JSON.parseObject(params, User.class);
+        userService.applyUser(newUser);
+        return Response.success();
     }
 
     @PostMapping("/reset")
     @Transactional(rollbackFor = Exception.class)
-    public Response reset(String params) {
-        try {
-            ResetDto dto = JSON.parseObject(params, ResetDto.class);
-            // 验证参数是否为空
-            ValidFileds.verificationoColumn(dto);
-            userService.reset(dto);
-            return Response.success();
-        } catch (MonitorException | ParseException e) {
-            return Response.failed(e.getMessage());
-        }
+    public Response reset(String params) throws Exception {
+        ResetDto dto = JSON.parseObject(params, ResetDto.class);
+        // 验证参数是否为空
+        ValidFileds.verificationoColumn(dto);
+        userService.reset(dto);
+        return Response.success();
     }
 }
