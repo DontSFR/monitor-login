@@ -67,7 +67,7 @@
         select * from user where email=#{email, jdbcType=VARCHAR}
     </select>
 
-    <select id="queryByAccountOrEmail" parameterType="java.lang.String">
-        select * from user where user=#{param} or email=#{param}
+    <select id="queryByAccountOrEmail" parameterType="java.lang.String" resultType="cn.fyd.monitorlogin.model.User">
+        select * from user where account=#{param} or email=#{param}
     </select>
 </mapper>
