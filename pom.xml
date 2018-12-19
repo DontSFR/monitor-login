@@ -11,7 +11,7 @@
     <groupId>cn.fyd</groupId>
     <artifactId>monitor-login</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>monitor-login</name>
     <description>Login server for Monitor</description>
 
@@ -36,6 +36,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <!-- 去除原生tomcat容器 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--mybatis启动器-->
         <dependency>
@@ -70,6 +77,13 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.53</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <!--打包的时候可以不用包进去，别的设施会提供。事实上该依赖理论上可以参与编译，测试，运行等周期。
+                相当于compile，但是打包阶段做了exclude操作-->
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -124,8 +138,8 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
-
         <defaultGoal>compile</defaultGoal>
+        <finalName>monitor-login</finalName>
     </build>
 
     <repositories>

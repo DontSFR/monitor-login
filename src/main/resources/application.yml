@@ -1,4 +1,5 @@
 server:
+  # 部署为war时将失效
   port: 8002
   servlet:
     context-path: /monitor-login
