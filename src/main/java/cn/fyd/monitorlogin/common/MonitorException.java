@@ -1,4 +1,4 @@
-package cn.fyd.monitorlogin.exception;
+package cn.fyd.monitorlogin.common;
 
 /**
  * 自定义异常类

@@ -1,14 +1,16 @@
 package cn.fyd.monitorlogin.service.impl;
 
+import cn.fyd.monitorlogin.common.MonitorException;
 import cn.fyd.monitorlogin.dao.MailDao;
 import cn.fyd.monitorlogin.dao.UserDao;
-import cn.fyd.monitorlogin.exception.MonitorException;
 import cn.fyd.monitorlogin.model.LoginDto;
 import cn.fyd.monitorlogin.model.Mail;
 import cn.fyd.monitorlogin.model.ResetDto;
 import cn.fyd.monitorlogin.model.User;
 import cn.fyd.monitorlogin.service.UserService;
 import cn.fyd.monitorlogin.util.CheckUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -27,6 +29,8 @@ import static cn.fyd.monitorlogin.common.Constant.*;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserDao userDao;
@@ -58,6 +62,7 @@ public class UserServiceImpl implements UserService {
         }
         // 存session
         session.setAttribute("userBean", resUser);
+        logger.info("日志信息 => 登录成功 ***** " + resUser.toString());
     }
 
     @Override
@@ -78,11 +83,13 @@ public class UserServiceImpl implements UserService {
             if(addUser(newUser,existNum) == 0) {
                 throw new MonitorException(REGIST_FAILED);
             }
+            logger.info("日志信息 => 注册成功");
         } else {
             // 修改信息
             if (editUser(newUser, existNum) == 0) {
                 throw new MonitorException(EDIT_USER_MESSAGE_FAILED);
             }
+            logger.info("日志信息 => 修改个人信息成功");
         }
     }
 
@@ -95,6 +102,7 @@ public class UserServiceImpl implements UserService {
         if (resUser == null) {
             throw new MonitorException(USER_NOT_EXIST);
         }
+        logger.info("日志信息 => 用户个人信息 ***** " + resUser.toString());
         return resUser;
     }
 
@@ -121,6 +129,7 @@ public class UserServiceImpl implements UserService {
         if (editUser(editUserParam, 1) == 0) {
             throw new MonitorException(EDIT_USER_MESSAGE_FAILED);
         }
+        logger.info("日志信息 => 重置密码成功");
     }
 
     public int addUser(User newUser, Integer existNum) throws MonitorException {

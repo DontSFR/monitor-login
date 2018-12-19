@@ -2,12 +2,14 @@ package cn.fyd.monitorlogin.service.impl;
 
 import cn.fyd.monitorlogin.dao.MailDao;
 import cn.fyd.monitorlogin.dao.UserDao;
-import cn.fyd.monitorlogin.exception.MonitorException;
+import cn.fyd.monitorlogin.common.MonitorException;
 import cn.fyd.monitorlogin.model.Mail;
 import cn.fyd.monitorlogin.model.User;
 import cn.fyd.monitorlogin.service.MailService;
 import cn.fyd.monitorlogin.util.CheckUtils;
 import cn.fyd.monitorlogin.util.DateUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -28,6 +30,8 @@ import static cn.fyd.monitorlogin.common.Constant.*;
  */
 @Service
 public class MailServiceImpl implements MailService {
+
+    private static Logger logger = LogManager.getLogger(MailServiceImpl.class);
 
     @Autowired
     private UserDao userDao;
@@ -89,5 +93,6 @@ public class MailServiceImpl implements MailService {
         // 设置邮件内容
         newMessage.setText(MAIL_MESS1 + secretKey + MAIL_MESS2);
         mailSender.send(newMessage);
+        logger.info("日志信息 => 邮件已发送");
     }
 }

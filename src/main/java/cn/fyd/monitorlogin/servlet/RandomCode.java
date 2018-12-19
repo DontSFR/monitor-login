@@ -1,7 +1,9 @@
 package cn.fyd.monitorlogin.servlet;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.imageio.ImageIO;
-import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,7 +26,10 @@ import static cn.fyd.monitorlogin.common.Constant.CAPTCHA_LENGTH;
  */
 @WebServlet("/RandomCode")
 public class RandomCode extends HttpServlet {
+
+	private static Logger logger = LogManager.getLogger(RandomCode.class);
 	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 设置图片的宽度
 	 */
@@ -35,36 +40,33 @@ public class RandomCode extends HttpServlet {
 	private static int HEIGHT = 22;
 
 	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response) {
-		try{
-			HttpSession session = request.getSession();
-			response.setContentType("image/jpeg");
-			ServletOutputStream sos = response.getOutputStream();
-			response.setHeader("pragma", "no-cache");
-			response.setHeader("cache-control", "no-cache");
-			response.setDateHeader("Expires", 0);
-			BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-			Graphics g = image.getGraphics();
-			char[] rands = generateCheckCode();
-			drawBackground(g);
-			drawRands(g, rands);
-			g.dispose();
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			ImageIO.write(image, "JPEG", bos);
-			byte[] buf = bos.toByteArray();
-			response.setContentLength(buf.length);
-			sos.write(buf);
-			bos.close();
-			sos.close();
-			String imgCode = new String(rands);
-			session.setAttribute("ImgCode", imgCode);
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession();
+		response.setContentType("image/jpeg");
+		ServletOutputStream sos = response.getOutputStream();
+		response.setHeader("pragma", "no-cache");
+		response.setHeader("cache-control", "no-cache");
+		response.setDateHeader("Expires", 0);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		Graphics g = image.getGraphics();
+		char[] rands = generateCheckCode();
+		drawBackground(g);
+		drawRands(g, rands);
+		g.dispose();
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ImageIO.write(image, "JPEG", bos);
+		byte[] buf = bos.toByteArray();
+		response.setContentLength(buf.length);
+		sos.write(buf);
+		bos.close();
+		sos.close();
+		String imgCode = new String(rands);
+		session.setAttribute("ImgCode", imgCode);
+		logger.info("日志信息 => session_id = " + session.getId() + " ***** 验证码：" + imgCode);
 	}
 
 	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		this.doGet(request, response);
 	}
 

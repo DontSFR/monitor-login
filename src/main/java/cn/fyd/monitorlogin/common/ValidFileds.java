@@ -1,7 +1,6 @@
 package cn.fyd.monitorlogin.common;
 
 import cn.fyd.monitorlogin.annotation.IsEmpty;
-import cn.fyd.monitorlogin.exception.MonitorException;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -29,7 +28,7 @@ public class ValidFileds {
         for (int i =0;i < fields.length;++i){
             Field field = fields[i];
             field.setAccessible(true);
-            Object fieldObject = null;
+            Object fieldObject;
             try {
                 fieldObject = field.get(object);
             } catch (IllegalAccessException e) {

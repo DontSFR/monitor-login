@@ -76,4 +76,15 @@ public class User {
     public void setMobile(BigInteger mobile) {
         this.mobile = mobile;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", mobile=" + mobile +
+                '}';
+    }
 }
