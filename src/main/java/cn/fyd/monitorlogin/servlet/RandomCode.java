@@ -16,8 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
-import static cn.fyd.monitorlogin.common.Constant.CAPTCHA_BACKGROUND;
-import static cn.fyd.monitorlogin.common.Constant.CAPTCHA_LENGTH;
+import static common.Constant.*;
 
 /**
  * 获取验证码Servlet

@@ -1,5 +1,6 @@
 package cn.fyd.monitorlogin.common;
 
+import common.Response;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static cn.fyd.monitorlogin.common.Constant.*;
+import static common.Constant.*;
 
 /**
  * aop
@@ -27,7 +28,7 @@ public class Aop {
      * @return 通用格式返回
      * @throws Throwable proceed方法抛出
      */
-    @Around("@annotation(cn.fyd.monitorlogin.annotation.IsLogin)")
+    @Around("@annotation(annotation.IsLogin)")
     public Object checkLogin(ProceedingJoinPoint pjp) throws Throwable {
         Object[] args = pjp.getArgs();
         int order=-1;

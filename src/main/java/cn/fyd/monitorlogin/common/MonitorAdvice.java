@@ -1,11 +1,13 @@
 package cn.fyd.monitorlogin.common;
 
+import common.MonitorException;
+import common.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static cn.fyd.monitorlogin.common.Constant.SYSTEM_ERROR;
+import static common.Constant.SYSTEM_ERROR;
 
 /**
  * 全局异常处理

@@ -2,12 +2,10 @@ package cn.fyd.monitorlogin.service.impl;
 
 import cn.fyd.monitorlogin.dao.MailDao;
 import cn.fyd.monitorlogin.dao.UserDao;
-import cn.fyd.monitorlogin.common.MonitorException;
 import cn.fyd.monitorlogin.model.Mail;
 import cn.fyd.monitorlogin.model.User;
 import cn.fyd.monitorlogin.service.MailService;
-import cn.fyd.monitorlogin.util.CheckUtils;
-import cn.fyd.monitorlogin.util.DateUtils;
+import common.MonitorException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +14,14 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import util.CheckUtils;
+import util.DateUtils;
 
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.UUID;
 
-import static cn.fyd.monitorlogin.common.Constant.*;
+import static common.Constant.*;
 
 /**
  * 邮件相关服务层实现类

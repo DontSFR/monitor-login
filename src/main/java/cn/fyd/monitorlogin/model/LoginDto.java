@@ -1,6 +1,7 @@
 package cn.fyd.monitorlogin.model;
 
-import cn.fyd.monitorlogin.annotation.IsEmpty;
+
+import annotation.IsEmpty;
 
 /**
  * 登录dto

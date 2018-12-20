@@ -1,6 +1,6 @@
 package cn.fyd.monitorlogin.model;
 
-import cn.fyd.monitorlogin.annotation.IsEmpty;
+import annotation.IsEmpty;
 
 /**
  * 重置密码dto

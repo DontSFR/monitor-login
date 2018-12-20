@@ -31,6 +31,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <version>2.0.1.RELEASE</version>
         </dependency>
         <!--SpringBoot的启动器-->
         <dependency>
@@ -70,6 +71,11 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.53</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.fyd</groupId>
+            <artifactId>monitor-utils</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
@@ -136,5 +142,14 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+<repository>
+    <id>monitor-utils-master</id>
+    <name>utils</name>
+    <url>https://raw.github.com.fanyidong/monitor-utils/master</url>
+    <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+    </snapshots>
+</repository>
     </repositories>
 </project>
