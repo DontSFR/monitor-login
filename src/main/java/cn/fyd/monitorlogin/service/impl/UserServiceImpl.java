@@ -1,5 +1,6 @@
 package cn.fyd.monitorlogin.service.impl;
 
+import annotation.IsLogin;
 import cn.fyd.monitorlogin.dao.MailDao;
 import cn.fyd.monitorlogin.dao.UserDao;
 import cn.fyd.monitorlogin.model.LoginDto;
@@ -144,6 +145,7 @@ public class UserServiceImpl implements UserService {
         return userDao.addUser(newUser);
     }
 
+    @IsLogin
     private int editUser(User newUser, Integer existNum) throws MonitorException {
         if (existNum == 0) {
             throw new MonitorException(USER_NOT_EXIST);

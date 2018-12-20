@@ -64,7 +64,6 @@ public class UserController {
     }
 
 
-    @IsLogin
     @PostMapping("/apply")
     @Transactional(rollbackFor = Exception.class)
     public String apply(String params) throws Exception{
