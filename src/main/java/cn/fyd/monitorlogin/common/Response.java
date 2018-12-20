@@ -1,5 +1,6 @@
 package cn.fyd.monitorlogin.common;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -56,11 +57,7 @@ public class Response {
 
     @Override
     public String toString() {
-        return "{" +
-                "\"result\":\"" + result + "\"," +
-                "\"message\":\"" + message + "\"," +
-                "\"data\":\"" + data + "\""+
-                "}";
+        return JSON.toJSONString(this);
     }
 
     public static String success() {
