@@ -57,32 +57,32 @@ public class Response {
     @Override
     public String toString() {
         return "{" +
-                "\"result\" : \"" + result + "\", " +
-                "\"message\" : \"" + message + "\", " +
-                "\"data\" : \"" + data + "\""+
+                "\"result\":\"" + result + "\"," +
+                "\"message\":\"" + message + "\"," +
+                "\"data\":\"" + data + "\""+
                 "}";
     }
 
-    public static Response success() {
+    public static String success() {
         Response res = new Response();
         res.setResult(SUCCESS);
         logger.info("日志信息 => return:" + res.toString());
-        return res;
+        return res.toString();
     }
 
-    public static Response success(Object data) {
+    public static String success(Object data) {
         Response res = new Response();
         res.setResult(SUCCESS);
         res.setData(data);
         logger.info("日志信息 => return:" + res.toString());
-        return res;
+        return res.toString();
     }
 
-    public static Response failed(String reason) {
+    public static String failed(String reason) {
         Response res = new Response();
         res.setResult(FAILED);
         res.setMessage(reason);
         logger.info("日志信息 => return:" + res.toString());
-        return res;
+        return res.toString();
     }
 }

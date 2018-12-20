@@ -20,10 +20,10 @@ public class MonitorAdvice {
     /**
      * 拦截捕捉异常 Exception.class
      * @param e
-     * @return Response
+     * @return java.lang.String
      */
     @ExceptionHandler(value = Exception.class)
-    public Response monitorErrorHandler(Exception e) {
+    public String monitorErrorHandler(Exception e) {
         if (e instanceof MonitorException) {
             logger.error(e.getMessage());
             return Response.failed(e.getMessage());

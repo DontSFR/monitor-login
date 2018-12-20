@@ -33,12 +33,12 @@ public class UserController {
 
     /**
      * 登录
-     * @param params {"account":"root","password":"1"}
+     * @param params {"params":{"account":"root","password":"1"}}
      * @param request
-     * @return Response
+     * @return java.lang.String
      */
     @PostMapping("/login")
-    public Response login(String params, HttpServletRequest request) throws Exception {
+    public String login(String params, HttpServletRequest request) throws Exception {
         LoginDto loginDto = JSON.parseObject(params, LoginDto.class);
         // 验证参数是否为空
         ValidFileds.verificationoColumn(loginDto);
@@ -46,9 +46,15 @@ public class UserController {
         return Response.success();
     }
 
+    /**
+     * 查询用户个人信息
+     * @param userId 用户id {"userId":"1"}
+     * @return java.lang.String
+     * @throws Exception
+     */
     @IsLogin
     @PostMapping("/userInfo")
-    public Response info(String userId) throws Exception {
+    public String info(String userId) throws Exception {
         // 验证参数是否为空
         if (StringUtils.isEmpty(userId)) {
             return Response.failed(WRONG_PARAMS);
@@ -57,10 +63,11 @@ public class UserController {
 
     }
 
+
     @IsLogin
     @PostMapping("/apply")
     @Transactional(rollbackFor = Exception.class)
-    public Response apply(String params) throws Exception{
+    public String apply(String params) throws Exception{
         User newUser = JSON.parseObject(params, User.class);
         userService.applyUser(newUser);
         return Response.success();
@@ -68,7 +75,7 @@ public class UserController {
 
     @PostMapping("/reset")
     @Transactional(rollbackFor = Exception.class)
-    public Response reset(String params) throws Exception {
+    public String reset(String params) throws Exception {
         ResetDto dto = JSON.parseObject(params, ResetDto.class);
         // 验证参数是否为空
         ValidFileds.verificationoColumn(dto);

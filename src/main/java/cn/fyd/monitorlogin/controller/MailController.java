@@ -19,9 +19,15 @@ public class MailController {
     @Autowired
     private MailService mailService;
 
+    /**
+     * 发送邮件
+     * @param email
+     * @return java.lang.String
+     * @throws Exception
+     */
     @PostMapping("/sendEmail")
     @Transactional(rollbackFor = Exception.class)
-    public Response sendEmail(String email) throws Exception{
+    public String sendEmail(String email) throws Exception{
         mailService.sendEmail(email);
         return Response.success();
     }
