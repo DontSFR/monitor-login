@@ -1,27 +1,28 @@
 package cn.fyd.monitorlogin.service.impl;
 
-import annotation.IsLogin;
+import cn.fyd.annotation.IsLogin;
 import cn.fyd.monitorlogin.dao.MailDao;
 import cn.fyd.monitorlogin.dao.UserDao;
 import cn.fyd.monitorlogin.service.UserService;
-import common.MonitorException;
-import model.LoginDto;
-import model.Mail;
-import model.ResetDto;
-import model.User;
+import cn.fyd.common.MonitorException;
+import cn.fyd.model.LoginDto;
+import cn.fyd.model.Mail;
+import cn.fyd.model.ResetDto;
+import cn.fyd.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
-import util.CheckUtils;
+import cn.fyd.util.CheckUtils;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.UUID;
 
-import static common.Constant.*;
+import static cn.fyd.common.Constant.*;
 
 /**
  * User表相关的服务接口实现类
@@ -141,6 +142,8 @@ public class UserServiceImpl implements UserService {
         newUser.setUserId(UUID.randomUUID().toString());
         // 密码使用md5加密
         newUser.setPassword(DigestUtils.md5DigestAsHex(newUser.getPassword().getBytes()));
+        // 创建时间
+        newUser.setCreateTime(new Date());
         // 新增用户
         return userDao.addUser(newUser);
     }

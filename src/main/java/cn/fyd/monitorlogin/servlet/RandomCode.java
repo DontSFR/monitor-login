@@ -16,7 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
-import static common.Constant.*;
+import static cn.fyd.common.Constant.*;
 
 /**
  * 获取验证码Servlet

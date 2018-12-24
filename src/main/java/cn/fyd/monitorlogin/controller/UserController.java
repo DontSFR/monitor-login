@@ -1,13 +1,13 @@
 package cn.fyd.monitorlogin.controller;
 
-import annotation.IsLogin;
+import cn.fyd.annotation.IsLogin;
 import cn.fyd.monitorlogin.service.UserService;
 import com.alibaba.fastjson.JSON;
-import common.Response;
-import common.ValidFileds;
-import model.LoginDto;
-import model.ResetDto;
-import model.User;
+import cn.fyd.common.Response;
+import cn.fyd.common.ValidFileds;
+import cn.fyd.model.LoginDto;
+import cn.fyd.model.ResetDto;
+import cn.fyd.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static common.Constant.WRONG_PARAMS;
+import static cn.fyd.common.Constant.WRONG_PARAMS;
 
 /**
  * User控制层

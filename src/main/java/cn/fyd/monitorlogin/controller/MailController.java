@@ -1,7 +1,7 @@
 package cn.fyd.monitorlogin.controller;
 
 import cn.fyd.monitorlogin.service.MailService;
-import common.Response;
+import cn.fyd.common.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;

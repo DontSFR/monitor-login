@@ -23,7 +23,7 @@
         </trim>
     </sql>
 
-    <insert id="saveMail" parameterType="model.Mail">
+    <insert id="saveMail" parameterType="cn.fyd.model.Mail">
         insert into mail
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="mailId!=null and mailId!=''">mailId,</if>
@@ -40,11 +40,11 @@
         </trim>
     </insert>
 
-    <select id="queryBySelective" resultType="model.Mail">
+    <select id="queryBySelective" resultType="cn.fyd.model.Mail">
         select * from mail <include refid="Example_Where_Clause" /> limit 0,1
     </select>
 
-    <select id="queryByUserIdOrderByOutTime" resultType="model.Mail">
+    <select id="queryByUserIdOrderByOutTime" resultType="cn.fyd.model.Mail">
         select * from mail where userId=#{userId, jdbcType=VARCHAR} order by outTime desc limit 0,1
     </select>
 </mapper>

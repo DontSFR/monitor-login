@@ -1,6 +1,6 @@
 package cn.fyd.monitorlogin.dao;
 
-import model.Mail;
+import cn.fyd.model.Mail;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
