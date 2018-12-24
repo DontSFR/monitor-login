@@ -2,10 +2,10 @@ package cn.fyd.monitorlogin.service.impl;
 
 import cn.fyd.monitorlogin.dao.MailDao;
 import cn.fyd.monitorlogin.dao.UserDao;
-import cn.fyd.monitorlogin.model.Mail;
-import cn.fyd.monitorlogin.model.User;
 import cn.fyd.monitorlogin.service.MailService;
 import common.MonitorException;
+import model.Mail;
+import model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

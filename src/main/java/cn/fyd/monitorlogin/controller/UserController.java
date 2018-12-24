@@ -1,13 +1,13 @@
 package cn.fyd.monitorlogin.controller;
 
 import annotation.IsLogin;
-import cn.fyd.monitorlogin.model.LoginDto;
-import cn.fyd.monitorlogin.model.ResetDto;
-import cn.fyd.monitorlogin.model.User;
 import cn.fyd.monitorlogin.service.UserService;
 import com.alibaba.fastjson.JSON;
 import common.Response;
 import common.ValidFileds;
+import model.LoginDto;
+import model.ResetDto;
+import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;

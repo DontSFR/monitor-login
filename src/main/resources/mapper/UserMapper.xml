@@ -31,7 +31,7 @@
         </trim>
     </sql>
 
-    <insert id="addUser" parameterType="cn.fyd.monitorlogin.model.User">
+    <insert id="addUser" parameterType="model.User">
         insert into user <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="userId!=null and userId!=''">userId,</if>
             <if test="account!=null and account!=''">account,</if>
@@ -47,27 +47,27 @@
         </trim>
     </insert>
 
-    <select id="countUser" parameterType="cn.fyd.monitorlogin.model.User" resultType="java.lang.Integer">
+    <select id="countUser" parameterType="model.User" resultType="java.lang.Integer">
         select count(*) from user <include refid="Example_Where_Clause" />
     </select>
 
-    <select id="queryBySelective" resultType="cn.fyd.monitorlogin.model.User">
+    <select id="queryBySelective" resultType="model.User">
         select * from user <include refid="Example_Where_Clause" />
     </select>
 
-    <update id="editByUserIdOrAccountOrEmail" parameterType="cn.fyd.monitorlogin.model.User">
+    <update id="editByUserIdOrAccountOrEmail" parameterType="model.User">
         update user <include refid="Example_Set_Clause" /> <include refid="Where_Clause_UserId_Account_Email" />
     </update>
 
-    <update id="editByUserId" parameterType="cn.fyd.monitorlogin.model.User">
+    <update id="editByUserId" parameterType="model.User">
         update user <include refid="Example_Set_Clause" /> where userId=#{userId, jdbcType=VARCHAR}
     </update>
 
-    <select id="queryByEmail" resultType="cn.fyd.monitorlogin.model.User">
+    <select id="queryByEmail" resultType="model.User">
         select * from user where email=#{email, jdbcType=VARCHAR}
     </select>
 
-    <select id="queryByAccountOrEmail" parameterType="java.lang.String" resultType="cn.fyd.monitorlogin.model.User">
+    <select id="queryByAccountOrEmail" parameterType="java.lang.String" resultType="model.User">
         select * from user where account=#{param} or email=#{param}
     </select>
 </mapper>

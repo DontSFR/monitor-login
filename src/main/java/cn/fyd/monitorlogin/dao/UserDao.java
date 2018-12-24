@@ -1,6 +1,6 @@
 package cn.fyd.monitorlogin.dao;
 
-import cn.fyd.monitorlogin.model.User;
+import model.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
