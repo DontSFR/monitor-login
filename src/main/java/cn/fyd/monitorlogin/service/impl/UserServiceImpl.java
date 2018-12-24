@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
             throw new MonitorException(WRONG_PASSWORD);
         }
         // 存session
-        session.setAttribute("userBean", resUser);
+        session.setAttribute(USER_BEAN, resUser);
         logger.info("日志信息 => 登录成功 ***** " + resUser.toString());
     }
 

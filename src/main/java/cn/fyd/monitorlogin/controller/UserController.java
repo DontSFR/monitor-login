@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static cn.fyd.common.Constant.USER_BEAN;
 import static cn.fyd.common.Constant.WRONG_PARAMS;
 
 /**
@@ -39,6 +40,8 @@ public class UserController {
      */
     @PostMapping("/login")
     public String login(String params, HttpServletRequest request) throws Exception {
+        // 方便测试，正式上线时应删除
+        request.getSession().setAttribute("ImgCode", "1234");
         LoginDto loginDto = JSON.parseObject(params, LoginDto.class);
         // 验证参数是否为空
         ValidFileds.verificationoColumn(loginDto);
@@ -59,7 +62,7 @@ public class UserController {
         if (StringUtils.isEmpty(userId)) {
             return Response.failed(WRONG_PARAMS);
         }
-        User userBean = (User) request.getAttribute("userBean");
+        User userBean = (User) request.getSession().getAttribute(USER_BEAN);
         if (!userId.equals(userBean.getUserId())) {
             return Response.failed(WRONG_PARAMS);
         }
