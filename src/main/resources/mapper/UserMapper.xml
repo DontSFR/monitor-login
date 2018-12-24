@@ -28,7 +28,7 @@
             <if test="password!=null and password!=''">password=#{password},</if>
             <if test="email!=null and email!=''">email=#{email},</if>
             <if test="mobile!=null and mobile!=''">mobile=#{mobile},</if>
-            <if test="createTime!=null and createTime!=''">createTime=#{createTime},</if>
+            <if test="createTime!=null">createTime=#{createTime},</if>
         </trim>updateTime=now()
     </sql>
 
@@ -39,14 +39,14 @@
             <if test="password!=null and password!=''">password,</if>
             <if test="email!=null and email!=''">email,</if>
             <if test="mobile!=null and mobile!=''">mobile,</if>
-            <if test="createTime!=null and createTime!=''">createTime,</if>updateTime
+            <if test="createTime!=null">createTime,</if>updateTime
         </trim> values <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId!=null and userId!=''">#{userId,jdbcType=VARCHAR},</if>
             <if test="account!=null and account!=''">#{account,jdbcType=VARCHAR},</if>
             <if test="password!=null and password!=''">#{password,jdbcType=VARCHAR},</if>
             <if test="email!=null and email!=''">#{email,jdbcType=VARCHAR},</if>
             <if test="mobile!=null and mobile!=''">#{mobile,jdbcType=VARCHAR},</if>
-            <if test="createTime!=null and createTime!=''">#{createTime,jdbcType=DATETIME},</if>now()
+            <if test="createTime!=null">#{createTime},</if>now()
         </trim>
     </insert>
 

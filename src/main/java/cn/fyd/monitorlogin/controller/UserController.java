@@ -1,13 +1,13 @@
 package cn.fyd.monitorlogin.controller;
 
 import cn.fyd.annotation.IsLogin;
-import cn.fyd.monitorlogin.service.UserService;
-import com.alibaba.fastjson.JSON;
 import cn.fyd.common.Response;
 import cn.fyd.common.ValidFileds;
 import cn.fyd.model.LoginDto;
 import cn.fyd.model.ResetDto;
 import cn.fyd.model.User;
+import cn.fyd.monitorlogin.service.UserService;
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -54,9 +54,13 @@ public class UserController {
      */
     @IsLogin
     @PostMapping("/userInfo")
-    public String info(String userId) throws Exception {
+    public String info(String userId, HttpServletRequest request) throws Exception {
         // 验证参数是否为空
         if (StringUtils.isEmpty(userId)) {
+            return Response.failed(WRONG_PARAMS);
+        }
+        User userBean = (User) request.getAttribute("userBean");
+        if (!userId.equals(userBean.getUserId())) {
             return Response.failed(WRONG_PARAMS);
         }
         return Response.success(userService.getUserInfo(userId));
