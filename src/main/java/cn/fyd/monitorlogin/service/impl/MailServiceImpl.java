@@ -1,11 +1,12 @@
 package cn.fyd.monitorlogin.service.impl;
 
-import cn.fyd.monitorlogin.dao.MailDao;
-import cn.fyd.monitorlogin.dao.UserDao;
-import cn.fyd.monitorlogin.service.MailService;
 import cn.fyd.common.MonitorException;
 import cn.fyd.model.Mail;
 import cn.fyd.model.User;
+import cn.fyd.monitorlogin.dao.MailDao;
+import cn.fyd.monitorlogin.dao.UserDao;
+import cn.fyd.monitorlogin.service.MailService;
+import cn.fyd.util.CheckUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import cn.fyd.util.CheckUtils;
-import cn.fyd.util.DateUtils;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -75,10 +74,10 @@ public class MailServiceImpl implements MailService {
         mail.setValidationCode(secretKey);
         Calendar now = Calendar.getInstance();
         // 设置创建时间
-        mail.setCreateTime(DateUtils.DateToString(now.getTime(), DATE_FOEMAT_TO_SECOND));
+        mail.setCreateTime(now.getTime());
         // 设置邮件到期时间为半个小时
         now.add(Calendar.MINUTE, 30);
-        mail.setOutTime(DateUtils.DateToString(now.getTime(), DATE_FOEMAT_TO_SECOND));
+        mail.setOutTime(now.getTime());
         // 插入数据库
         mailDao.saveMail(mail);
 
