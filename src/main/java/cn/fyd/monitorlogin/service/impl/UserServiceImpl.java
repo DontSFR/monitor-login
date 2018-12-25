@@ -1,21 +1,21 @@
 package cn.fyd.monitorlogin.service.impl;
 
 import cn.fyd.annotation.IsLogin;
-import cn.fyd.monitorlogin.dao.MailDao;
-import cn.fyd.monitorlogin.dao.UserDao;
-import cn.fyd.monitorlogin.service.UserService;
 import cn.fyd.common.MonitorException;
 import cn.fyd.model.LoginDto;
 import cn.fyd.model.Mail;
 import cn.fyd.model.ResetDto;
 import cn.fyd.model.User;
+import cn.fyd.monitorlogin.dao.MailDao;
+import cn.fyd.monitorlogin.dao.UserDao;
+import cn.fyd.monitorlogin.service.UserService;
+import cn.fyd.util.CheckUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
-import cn.fyd.util.CheckUtils;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void applyUser(User newUser) throws MonitorException {
+    public void applyUser(User newUser, User userBean) throws MonitorException {
         String email = newUser.getEmail();
         if (!StringUtils.isEmpty(email)&&!CheckUtils.checkEmail(email)) {
             throw new MonitorException(WRONG_MAIL);
@@ -87,6 +87,10 @@ public class UserServiceImpl implements UserService {
             }
             logger.info("日志信息 => 注册成功");
         } else {
+            // 验证是否修改本人信息
+            if (!newUser.getUserId().equals(userBean.getUserId())) {
+                throw new MonitorException(WRONG_USER);
+            }
             // 修改信息
             if (editUser(newUser, existNum) == 0) {
                 throw new MonitorException(EDIT_USER_MESSAGE_FAILED);

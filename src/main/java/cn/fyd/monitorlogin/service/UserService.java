@@ -26,9 +26,10 @@ public interface UserService {
     /**
      * 修改/新增 用户
      * @param user
+     * @param userBean session信息 用于修改信息时 验证是否修改本人
      * @throws MonitorException
      */
-    void applyUser(User user) throws MonitorException;
+    void applyUser(User user, User userBean) throws MonitorException;
 
     /**
      * 获取用户信息

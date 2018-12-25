@@ -13,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static cn.fyd.common.Constant.USER_BEAN;
-import static cn.fyd.common.Constant.WRONG_PARAMS;
+import static cn.fyd.common.Constant.*;
 
 /**
  * User控制层
@@ -57,14 +57,14 @@ public class UserController {
      */
     @IsLogin
     @PostMapping("/userInfo")
-    public String info(String userId, HttpServletRequest request) throws Exception {
+    public String info(@RequestParam("userId") String userId, HttpServletRequest request) throws Exception {
         // 验证参数是否为空
         if (StringUtils.isEmpty(userId)) {
             return Response.failed(WRONG_PARAMS);
         }
         User userBean = (User) request.getSession().getAttribute(USER_BEAN);
         if (!userId.equals(userBean.getUserId())) {
-            return Response.failed(WRONG_PARAMS);
+            return Response.failed(WRONG_USER);
         }
         return Response.success(userService.getUserInfo(userId));
 
@@ -73,9 +73,10 @@ public class UserController {
 
     @PostMapping("/apply")
     @Transactional(rollbackFor = Exception.class)
-    public String apply(String params) throws Exception{
+    public String apply(String params, HttpServletRequest request) throws Exception{
         User newUser = JSON.parseObject(params, User.class);
-        userService.applyUser(newUser);
+        User userBean = (User) request.getSession().getAttribute(USER_BEAN);
+        userService.applyUser(newUser, userBean);
         return Response.success();
     }
 
