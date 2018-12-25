@@ -8,8 +8,8 @@
             <if test="mailId!=null and mailId!=''">and mailId=#{mailId}</if>
             <if test="userId!=null and userId!=''">and userId=#{userId}</if>
             <if test="validationCode!=null and validationCode!=''">and validationCode=#{validationCode}</if>
-            <if test="outTime!=null and outTime!=''">and outTime=#{outTime}</if>
-            <if test="createTime!=null and createTime!=''">and createTime=#{createTime}</if>
+            <if test="outTime!=null">and outTime=#{outTime}</if>
+            <if test="createTime!=null">and createTime=#{createTime}</if>
         </trim>
     </sql>
 
@@ -18,8 +18,8 @@
             <if test="mailId!=null and mailId!=''">mailId=#{mailId}</if>
             <if test="userId!=null and userId!=''">userId=#{userId}</if>
             <if test="validationCode!=null and validationCode!=''">validationCode=#{validationCode}</if>
-            <if test="outTime!=null and outTime!=''">outTime=#{outTime}</if>
-            <if test="createTime!=null and createTime!=''">createTime=#{createTime}</if>
+            <if test="outTime!=null">outTime=#{outTime}</if>
+            <if test="createTime!=null">createTime=#{createTime}</if>
         </trim>
     </sql>
 
@@ -29,14 +29,14 @@
             <if test="mailId!=null and mailId!=''">mailId,</if>
             <if test="userId!=null and userId!=''">userId,</if>
             <if test="validationCode!=null and validationCode!=''">validationCode,</if>
-            <if test="outTime!=null and outTime!=''">outTime,</if>
-            <if test="createTime!=null and createTime!=''">createTime,</if>
+            <if test="outTime!=null">outTime,</if>
+            <if test="createTime!=null">createTime,</if>
         </trim> values <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="mailId!=null and mailId!=''">#{mailId,jdbcType=VARCHAR},</if>
             <if test="userId!=null and userId!=''">#{userId,jdbcType=VARCHAR},</if>
             <if test="validationCode!=null and validationCode!=''">#{validationCode,jdbcType=VARCHAR},</if>
-            <if test="outTime!=null and outTime!=''">#{outTime,jdbcType=TIMESTAMP},</if>
-            <if test="createTime!=null and createTime!=''">#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="outTime!=null">#{outTime,jdbcType=TIMESTAMP},</if>
+            <if test="createTime!=null">#{createTime,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
 
