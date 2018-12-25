@@ -6,6 +6,7 @@ import cn.fyd.model.User;
 import cn.fyd.monitorlogin.dao.MailDao;
 import cn.fyd.monitorlogin.dao.UserDao;
 import cn.fyd.monitorlogin.service.MailService;
+import cn.fyd.monitorlogin.servlet.RandomCode;
 import cn.fyd.util.CheckUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +19,6 @@ import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.UUID;
 
 import static cn.fyd.common.Constant.*;
 
@@ -67,7 +67,7 @@ public class MailServiceImpl implements MailService {
             }
         }
         // 生成安全码
-        String secretKey = UUID.randomUUID().toString();
+        String secretKey = new String(RandomCode.generateCheckCode());
         // 新建Mail对象
         Mail mail = new Mail();
         mail.setUserId(resUser.getUserId());

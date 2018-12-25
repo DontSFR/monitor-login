@@ -96,7 +96,7 @@ public class RandomCode extends HttpServlet {
 		g.drawString("" + rands[3], 46, 16);
 	}
 
-	private char[] generateCheckCode() {
+	public static char[] generateCheckCode() {
 		String chars = "3456789ABCDEFGHJKLMNPQRSTUVWXY";
 		char[] rands = new char[4];
 		for (int i = 0; i < CAPTCHA_LENGTH; i++) {
